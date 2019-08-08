@@ -1,67 +1,55 @@
 /**
- * 方法说明：冒泡排序
- * @param {Array} arr
+ * 方法说明：桶排序
+ * 排序: 小 -> 大
+ * @param {Array} array 数组
+ * @param {number} num   桶的数量
  * @return {Array}
  */
-function bubbleSort(arr) {
-    var len = arr.length;
-    console.time('改进前冒泡排序耗时');
-    for (var i = 0; i < len; i++) {
-        for (var j = 0; j < len - 1 - i; j++) {
-            if (arr[j] > arr[j + 1]) { //相邻元素两两对比
-                var temp = arr[j + 1]; //元素交换
-                arr[j + 1] = arr[j];
-                arr[j] = temp;
+// 就是创建几个桶, 每个桶之间的间隔是算出来的(最大值-最小值)/桶的数量
+// 在各自区域内的数组进行排序
+// 排序完成后顺序遍历非空的数组,
+function bucketSort(array, num) {
+    if (array.length <= 1) {
+        return array;
+    }
+    var len = array.length,
+        buckets = [],
+        result = [],
+        min = max = array[0],
+        regex = '/^[1-9]+[0-9]*$/',
+        space, n = 0;
+    num = num || ((num > 1 && regex.test(num)) ? num : 10);
+    console.time('桶排序耗时');
+	// 找到最大值和最小值
+    for (var i = 1; i < len; i++) {
+        min = min <= array[i] ? min : array[i];
+        max = max >= array[i] ? max : array[i];
+    }
+	// 看他们相差多少, 每个桶可以放多少数据
+    space = (max - min + 1) / num;
+	// 我把我的数据放入桶中
+    for (var j = 0; j < len; j++) {
+		// 判断可以加到哪个桶里
+        var index = Math.floor((array[j] - min) / space);
+        if (buckets[index]) { 
+			//  非空桶，插入排序
+            var k = buckets[index].length - 1;
+            while (k >= 0 && buckets[index][k] > array[j]) {
+                buckets[index][k + 1] = buckets[index][k];
+                k--;
             }
+            buckets[index][k + 1] = array[j];
+        } else { //空桶，初始化
+            buckets[index] = [];
+            buckets[index].push(array[j]);
         }
     }
-    console.timeEnd('改进前冒泡排序耗时');
-    return arr;
-}
-//1.改进冒泡排序
-function bubbleSort2(arr2) {
-    console.time('1.改进后冒泡排序耗时');
-    var i = arr.length - 1; //初始时,最后位置保持不变
-    while (i > 0) {
-        var pos = 0; //每趟开始时,无记录交换
-        for (var j = 0; j < i; j++)
-            if (arr[j] > arr[j + 1]) {
-                pos = j; //记录交换的位置
-                var tmp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = tmp;
-            }
-        i = pos; //为下一趟排序作准备
+    while (n < num) {
+        result = result.concat(buckets[n]);
+        n++;
     }
-    console.timeEnd('1.改进后冒泡排序耗时');
-    return arr2;
-}
-//2.改进冒泡排序
-function bubbleSort3(arr3) {
-    var low = 0;
-    var high = arr.length - 1; //设置变量的初始值
-    var tmp, j;
-    console.time('2.改进后冒泡排序耗时');
-    while (low < high) {
-        for (j = low; j < high; ++j) //正向冒泡,找到最大者
-            if (arr[j] > arr[j + 1]) {
-                tmp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = tmp;
-            }
-            --high; //修改high值, 前移一位
-        for (j = high; j > low; --j) //反向冒泡,找到最小者
-            if (arr[j] < arr[j - 1]) {
-                tmp = arr[j];
-                arr[j] = arr[j - 1];
-                arr[j - 1] = tmp;
-            }
-            ++low; //修改low值,后移一位
-    }
-    console.timeEnd('2.改进后冒泡排序耗时');
-    return arr3;
+    console.timeEnd('桶排序耗时');
+    return result;
 }
 var arr = [3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48];
-console.log(bubbleSort(arr)); //[2, 3, 4, 5, 15, 19, 26, 27, 36, 38, 44, 46, 47, 48, 50]
-console.log(bubbleSort2(arr)); //[2, 3, 4, 5, 15, 19, 26, 27, 36, 38, 44, 46, 47, 48, 50]
-console.log(bubbleSort3(arr)); //[2, 3, 4, 5, 15, 19, 26, 27, 36, 38, 44, 46, 47, 48, 50]
+console.log(bucketSort(arr, 4)); //[2, 3, 4, 5, 15, 19, 26, 27, 36, 38, 44, 46, 47, 48, 50]

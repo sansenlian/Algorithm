@@ -1,8 +1,10 @@
 /**
  * 方法说明：归并排序
+ * 排序结果: 小 -> 大
  * @param {Array} arr 待排序数组
  * @return {Array}
  */
+// 二分不断往下找, 知道找到底层的两个数字比较的情况
 function mergeSort(arr) { //采用自上而下的递归方法
     var len = arr.length;
     if (len < 2) {
@@ -13,10 +15,12 @@ function mergeSort(arr) { //采用自上而下的递归方法
         right = arr.slice(middle);
     return merge(mergeSort(left), mergeSort(right));
 }
-
+// 合并左右边序列, 对传入的左右边序列进行归并, 最底层是两个数字比较
+// 也就意味着传入的左右数组, 各自组内有序
 function merge(left, right) {
     var result = [];
     console.time('归并排序耗时');
+	// 然后创建一个结果数组, 比较两个有序列, 小的就放入结果中
     while (left.length && right.length) {
         if (left[0] <= right[0]) {
             result.push(left.shift());

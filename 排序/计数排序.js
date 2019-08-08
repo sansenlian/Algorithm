@@ -1,5 +1,6 @@
 /**
  * 方法说明：计数排序
+ * 排序: 小 -> 大
  * @param {Array} array 待排序数组
  * @return {Array}
  */
@@ -8,6 +9,7 @@ function countingSort(array) {
         B = [],
         C = [],
         min = max = array[0];
+	// 就是用哈希存储, 数一下这个数字出现几次, 然后扫描哈希表, 从最小数字扫描到最大数字即可
     console.time('计数排序耗时');
     for (var i = 0; i < len; i++) {
         min = min <= array[i] ? min : array[i];

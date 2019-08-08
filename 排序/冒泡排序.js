@@ -1,5 +1,6 @@
-﻿/**
+/**
  * 方法说明：冒泡排序
+ * 排序: 小 -> 大
  * @param {Array} arr
  * @return {Array}
  */
@@ -18,7 +19,7 @@ function bubbleSort(arr) {
     console.timeEnd('改进前冒泡排序耗时');
     return arr;
 }
-//1.改进冒泡排序
+//1.改进冒泡排序, 通过一个pos判断是否已经排序完成
 function bubbleSort2(arr2) {
     console.time('1.改进后冒泡排序耗时');
     var i = arr.length - 1; //初始时,最后位置保持不变
@@ -36,7 +37,8 @@ function bubbleSort2(arr2) {
     console.timeEnd('1.改进后冒泡排序耗时');
     return arr2;
 }
-//2.改进冒泡排序
+//2.改进冒泡排序, 左边找最小值的同时, 右边找最大值
+// 先各自从两端开始, 左右各自确认完一个位置后都向内走一步
 function bubbleSort3(arr3) {
     var low = 0;
     var high = arr.length - 1; //设置变量的初始值

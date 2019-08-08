@@ -1,8 +1,10 @@
 /**
+ * 排序: 小 -> 大
  * 方法说明：希尔排序
  * @param {Array} arr 待排序数组
  * @return {Array}
  */
+// 按照步长来进行, 隔着步长区间插入排序,然后不然缩小步长,
 function shellSort(arr) {
     var len = arr.length,
         temp,
