@@ -1,6 +1,6 @@
 /**
  * 方法说明：桶排序
- * 排序: 小 -> 大
+ * Sort: 小 -> 大
  * @param {Array} array 数组
  * @param {number} num   桶的数量
  * @return {Array}

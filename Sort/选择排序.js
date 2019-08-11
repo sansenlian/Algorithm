@@ -1,5 +1,5 @@
 // 即每次选择最小值,找到就放前面, 稳定o(n^2)
-// 排序: 小 -> 大
+// Sort: 小 -> 大
 function selectionSort(arr) {
     var len = arr.length;
     var minIndex, temp;

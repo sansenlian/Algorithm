@@ -1,6 +1,6 @@
 /**
  * 方法说明：冒泡排序
- * 排序: 小 -> 大
+ * Sort: 小 -> 大
  * @param {Array} arr
  * @return {Array}
  */

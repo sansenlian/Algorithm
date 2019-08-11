@@ -1,5 +1,5 @@
 /**
- * 排序: 小 -> 大
+ * Sort: 小 -> 大
  * 方法说明：希尔排序
  * @param {Array} arr 待排序数组
  * @return {Array}
